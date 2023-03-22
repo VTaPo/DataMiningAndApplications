@@ -57,4 +57,88 @@ def computePercentageOfMissingValuesInColumn(data,column):
 			sum_missing_values+=1
 	return (sum_missing_values/getNumberOfSamples(data))*100
 
+# Cau 3
+def typeOfAttribute(col,data):
+    x=[]
+    for i in range (getNumberOfSamples(data)):
+        if isNull(data[col][i])==False:
+            if type(data[col][i])==int or type(data[col][i])==np.int64 or type(data[col][i])==np.int32 or type(data[col][i])==float or type(data[col][i])==np.float64 or type(data[col][i])==np.float32:
+                x.append('numeric')
+                break
+            else:
+                x.append('categorical')
+                break
+    return x[0]
 
+def meanOfCol(col,data):
+    sum=0
+    sample=0
+    for i in range (getNumberOfSamples(data)):
+        if isNull(data[col][i])==False:
+            sample=sample+1
+            sum=sum+data[col][i]
+    mean=sum/sample
+    return mean
+
+def freqOfValue(value,col,data):
+    freq=0
+    for i in range (getNumberOfSamples(data)):
+        if data[col][i]==value:
+            freq=freq+1
+    return freq
+
+def findMax(list_):
+    maxValue=list_[0]
+    for i in range (len(list_)):
+        if list_[i]>maxValue:
+            maxValue=list_[i]
+    return maxValue
+        
+def modeOfCol(col,data):
+    value=[] #Value of Index i
+    freq=[]  #List saves freq of Value of Index i
+    for i in range (getNumberOfSamples(data)):
+        if isNull(data[col][i])==False and (data[col][i] in value)==False:
+            value.append(data[col][i])
+            freq.append(freqOfValue(data[col][i],col,data))
+    maxFreq=findMax(freq)
+    for i in range (len(freq)):
+        if value[i]==maxFreq:
+            index=i
+    return value[i]
+def medianOfCol(col,data):
+    list_=[] #List saves not null values of this column
+    for j in range (getNumberOfSamples(data)):
+        if isNull(data[col][j])==False and (data[col][j] in list_)==False:
+            list_.append(data[col][j])
+    i=(len(list_)+1)/2
+    list_.sort()
+    if len(list_)%2!=0:
+        return list_[i]
+    else:
+        return (list_[round(i)]+list_[round(i)-1])/2
+    
+def fill_missing_valueOfCol(col,data,methods):
+    fill=list(data[col])
+    if methods=='mean':
+        x=meanOfCol(col,data)
+        for i in range(getNumberOfSamples(data)):
+            if isNull(fill[i]):
+                fill[i]=x
+    elif methods=='median':
+        x=medianOfCol(col,data)
+        for i in range(getNumberOfSamples(data)):
+            if isNull(fill[i]):
+                fill[i]=x
+    else:
+        x=modeOfCol(col,data)
+        for i in range(getNumberOfSamples(data)):
+            if isNull(fill[i]):
+                fill[i]=x
+    return fill
+
+def findIndexOfCol(col,data):
+     tittle=getColumns(data)
+     for i in range(len(tittle)):
+          if tittle(i)==col:
+               return i
