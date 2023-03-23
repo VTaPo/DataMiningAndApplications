@@ -27,6 +27,31 @@ def helpMessageForRemovingFunctions():
 	print('|| DEFAULT THRESHOLD IS 0%, DEFAULT OUTPUT FILE PATH: "output.csv"                     ||')
 	print('=========================================================================================')
 
+def helpMessageForCalculateFunctions():
+	print('========================================================================================')
+	print('|| DATA PREPROCESSING:                                                                 ||')
+	print('||                                                                                     ||')
+	print('|| -h/--help to show instructions                                                      ||')
+	print('|| -i/--input=... to input path to csv file                                            ||')
+	print('|| -f/--first=... to input first column you want to calculate                          ||')
+	print('|| -s/--second=... to input second column you want to calculate                        ||')
+	print('|| -o/--output=... to output path to output file                                       ||')
+	print('|| DEFAULT METHOD IS ADD, DEFAULT OUTPUT FILE PATH: "caculatation_result.csv"          ||')
+	print('=========================================================================================')   
+
+def helpMessageForFillMissingFunctions():
+	print('========================================================================================')
+	print('|| DATA PREPROCESSING:                                                                 ||')
+	print('||                                                                                     ||')
+	print('|| -h/--help to show instructions                                                      ||')
+	print('|| -i/--input=... to input path to csv file                                            ||')
+	print('|| -c/--column=... to input column you want to fill in                                 ||')
+	print('|| -m/--method=...(mean/median/mode) to input method you want to use to fill in        ||')
+	print('|| -a/--all=...(true/false) to input if you want to fill all missing columns or not    ||')
+	print('|| -o/--output=... to output path to output file                                       ||')
+	print('|| DEFAULT METHOD IS ADD, DEFAULT OUTPUT FILE PATH: "caculatation_result.csv"          ||')
+	print('=========================================================================================')   
+  
 def getColumns(data):
 	return list(data)
 
@@ -59,16 +84,14 @@ def computePercentageOfMissingValuesInColumn(data,column):
 
 # Cau 3
 def typeOfAttribute(col,data):
-    x=[]
     for i in range (getNumberOfSamples(data)):
         if isNull(data[col][i])==False:
             if type(data[col][i])==int or type(data[col][i])==np.int64 or type(data[col][i])==np.int32 or type(data[col][i])==float or type(data[col][i])==np.float64 or type(data[col][i])==np.float32:
-                x.append('numeric')
+                return 'numeric'
                 break
             else:
-                x.append('categorical')
+                return 'categorical'
                 break
-    return x[0]
 
 def meanOfCol(col,data):
     sum=0
@@ -138,7 +161,56 @@ def fill_missing_valueOfCol(col,data,methods):
     return fill
 
 def findIndexOfCol(col,data):
-     tittle=getColumns(data)
-     for i in range(len(tittle)):
-          if tittle(i)==col:
+     title=getColumns(data)
+     for i in range(len(title)):
+          if title[i]==col:
                return i
+
+def checkMethod(method,col,data):
+    if typeOfAttribute(col,data)=='numeric':
+        if method=='mean' or method=='median':
+            return True
+        else: return False
+    elif typeOfAttribute(col,data)=='categorical':
+        if method=='mode':
+             return True
+        else:
+             return False
+    return False
+       
+#Cau 4
+def add(numA,numB):
+    if isNull(numA)==False and isNull(numB)==False:
+        return numA+numB
+    else:
+        if isNull(numA)==True:
+            return numA
+        else:
+            return numB
+        
+def sub(numA,numB):
+    if isNull(numA)==False and isNull(numB)==False:
+        return numA-numB
+    else:
+        if isNull(numA)==True:
+            return numA
+        else:
+            return numB
+
+def mul(numA,numB):
+    if isNull(numA)==False and isNull(numB)==False:
+        return numA*numB
+    else:
+        if isNull(numA)==True:
+            return numA
+        else:
+            return numB
+        
+def div(numA,numB):
+    if isNull(numA)==False and isNull(numB)==False:
+        return numA/numB
+    else:
+        if isNull(numA)==True:
+            return numA
+        else:
+            return numB
