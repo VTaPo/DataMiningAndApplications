@@ -36,6 +36,7 @@ def helpMessageForCalculateFunctions():
 	print('|| -f/--first=... to input first column you want to calculate                          ||')
 	print('|| -s/--second=... to input second column you want to calculate                        ||')
 	print('|| -o/--output=... to output path to output file                                       ||')
+	print('|| -m/--method=...(add/sub/mul/div) to calculate first and second column               ||')
 	print('|| DEFAULT METHOD IS ADD, DEFAULT OUTPUT FILE PATH: "caculatation_result.csv"          ||')
 	print('=========================================================================================')   
 
@@ -92,6 +93,7 @@ def typeOfAttribute(col,data):
             else:
                 return 'categorical'
                 break
+    return 'none'
 
 def meanOfCol(col,data):
     sum=0
