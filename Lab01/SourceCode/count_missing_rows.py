@@ -13,18 +13,22 @@ long_options=["help", "input="]
 try:
 	arguments, values = getopt.getopt(argumentList, options, long_options)
 
-	if arguments[0][0] in ("-h", "--help"):
+	if len(arguments)==1 and arguments[0][0] in ("-h", "--help"):
 		basicHelpMessage()
-	elif arguments[0][0] in ("-i", "--input"):
-		num_missing_rows=0
-		data=readDataset(str(arguments[0][1]))
-		columns= getColumns(data)
-		for i in range(getNumberOfSamples(data)):
-			for c in columns:
-				if isNull(data[c][i]):
-					num_missing_rows+=1
-					break
-		print('The number of rows that have missing values: ', num_missing_rows)
+	else:
+		for i in range(len(arguments)):
+			if arguments[i][0] in ("-h", "--help"):
+				basicHelpMessage()
+			elif arguments[i][0] in ("-i", "--input"):
+				num_missing_rows=0
+				data=readDataset(str(arguments[i][1]))
+				columns= getColumns(data)
+				for j in range(getNumberOfSamples(data)):
+					for c in columns:
+						if isNull(data[c][j]):
+							num_missing_rows+=1
+							break
+				print('The number of rows that have missing values: ', num_missing_rows)
 except:
 	showNotice()
 
