@@ -1,6 +1,6 @@
 import getopt, sys
 import csv
-from utils2 import*
+from utils import*
 
 def parseColumnParam(column_param):
 	column_param=column_param.replace(' ','')
