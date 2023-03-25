@@ -4,7 +4,7 @@ from utils import*
 
 input_=""
 method='mean'
-all=True
+all=False
 column=""
 output="filled_file.csv"
 # list of command line arguments
@@ -57,6 +57,11 @@ try:
 				writer.writerow(row)
 				for i in range (len(row)):
 					del(row[0])
+			print('Filling missing values done, checking in ', output)
+			outputFile.close()
+		elif all=="false" and checkMethod(method,column,data)==False:
+			print('This method is unreasonable, please check again')
+			print(output,' is empty')		
 		elif all=="true":
 			list_missing_columns=[] #saves missing columns
 			type_missing_columns=[] #saves type of these missing columns
@@ -105,8 +110,8 @@ try:
 				for i in range (len(row)):
 					del(row[0])
 
-		print('Filling missing values done, checking in ', output)
-		outputFile.close()
+			print('Filling missing values done, checking in ', output)
+			outputFile.close()
 except:
 	showNotice()
 
