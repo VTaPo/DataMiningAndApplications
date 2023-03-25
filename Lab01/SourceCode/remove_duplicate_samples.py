@@ -2,15 +2,14 @@ import getopt, sys
 import csv
 from utils import*
 
-def helpMessageForRemovingFunctions():
+def helpMessage():
 	print('========================================================================================')
 	print('|| DATA PREPROCESSING:                                                                 ||')
 	print('||                                                                                     ||')
 	print('|| -h/--help to show instructions                                                      ||')
 	print('|| -i/--input=... to input path to csv file                                            ||')
-	print('|| -t/--threshold=... to input allowed threshold percentage of missing value           ||')
 	print('|| -o/--output=... to output path to output file                                       ||')
-	print('|| DEFAULT THRESHOLD IS 0%, DEFAULT OUTPUT FILE PATH: "output.csv"                     ||')
+	print('|| DEFAULT OUTPUT FILE PATH: "output.csv"                                              ||')
 	print('=========================================================================================')
 
 output="output.csv"
@@ -28,11 +27,13 @@ long_options=["help", "input=", "output="]
 try:
 	arguments, values = getopt.getopt(argumentList, options, long_options)
 
-	if arguments[0][0] in ("-h", "--help"):
-		helpMessageForRemovingFunctions()
+	if len(arguments)==1 and arguments[0][0] in ("-h", "--help"):
+		helpMessage()
 	else:
 		for i in range(len(arguments)):
-			if arguments[i][0] in ("-i", "--input"):
+			if arguments[i][0] in ("-h", "--help"):
+				helpMessage()
+			elif arguments[i][0] in ("-i", "--input"):
 				input_=str(arguments[i][1])
 			elif arguments[i][0] in ("-o", "--output"):
 				output=str(arguments[i][1])
