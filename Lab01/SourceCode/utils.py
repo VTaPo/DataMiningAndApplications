@@ -51,7 +51,7 @@ def helpMessageForFillMissingFunctions():
 	print('|| -m/--method=...(mean/median/mode) to input method you want to use to fill in        ||')
 	print('|| -a/--all=(true/false) to input if you want to fill all missing columns or not       ||')
 	print('|| -o/--output=... to output path to output file                                       ||')
-	print('|| DEFAULT METHOD IS ADD, DEFAULT OUTPUT FILE PATH: "caculatation_result.csv"          ||')
+	print('|| DEFAULT METHOD IS MEAN, DEFAULT OUTPUT FILE PATH: "filled_file.csv"                 ||')
 	print('|| DEFAULT ALL: FALSE                                                                  ||')
 	print('=========================================================================================')
 
@@ -244,10 +244,10 @@ def fill_missing_valueOfCol(col,data,methods):
 
 #get index of a attribute in list of data's attributes
 def findIndexOfCol(col,data):
-	 title=getColumns(data)
-	 for i in range(len(title)):
-		  if title[i]==col:
-			   return i
+	title=getColumns(data)
+	for i in range(len(title)):
+		if title[i]==col:
+			return i
 
 #check right filling method for numerical and categorical attributes
 def checkMethod(method,col,data):
@@ -257,9 +257,9 @@ def checkMethod(method,col,data):
 		else: return False
 	elif typeOfAttribute(col,data)=='categorical':
 		if method=='mode':
-			 return True
+			return True
 		else:
-			 return False
+			return False
 	return False
 	   
 #add two columns
