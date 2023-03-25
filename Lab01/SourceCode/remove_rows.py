@@ -18,11 +18,13 @@ long_options=["help", "input=", "threshold=","output="]
 try:
 	arguments, values = getopt.getopt(argumentList, options, long_options)
 
-	if arguments[0][0] in ("-h", "--help"):
+	if len(arguments)==1 and arguments[0][0] in ("-h", "--help"):
 		helpMessageForRemovingFunctions()
 	else:
 		for i in range(len(arguments)):
-			if arguments[i][0] in ("-i", "--input"):
+			if arguments[i][0] in ("-h", "--help"):
+				helpMessageForRemovingFunctions()
+			elif arguments[i][0] in ("-i", "--input"):
 				input_=str(arguments[i][1])
 			elif arguments[i][0] in ("-t", "--threshold"):
 				threshold = arguments[i][1]
